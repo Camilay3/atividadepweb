@@ -4,60 +4,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
     <title>PWeb</title>
 </head>
 
 <body>
-    <p><b>Escolha uma quantidade de registros para exibir: </b></p>
-    <div class="nums">
-        <a href="/ind/5">5</a>
-        <a href="/ind/10">10</a>
-        <a href="/ind/15">15</a>
-    </div>
+    <section>
+        <form action="/ind" method="POST">
+            <div class="radios">
+                <p><b>Escolha uma quantidade de registros para exibir: </b></p>
 
-    <form action="/ind" method="POST">
-        <input type="radio" name="quantidade" id="qnt5" value="5">
-        <label for="qnt5">Mostrar 5 registros</label>
+                <div class="labels">
+                    <input type="radio" name="quantidade" id="qnt5" value="5" class="none">
+                    <label for="qnt5">05</label>
+                    <input type="radio" name="quantidade" id="qnt10" value="10" class="none">
+                    <label for="qnt10">10</label>
+                    <input type="radio" name="quantidade" id="qnt15" value="15" class="none">
+                    <label for="qnt15">15</label>
+                </div>
+            </div>
 
-        <input type="radio" name="quantidade" id="qnt10" value="10">
-        <label for="qnt10">Mostrar 10 registros</label>
+            <div class="inputs">
+                <div>
+                    <label for="filtroNome"><b>Filtrar por Nome:</b></label>
+                    <input type="text" name="filtroNome">
+                </div>
 
-        <input type="radio" name="quantidade" id="qnt15" value="15">
-        <label for="qnt15">Mostrar 15 registros</label>
+                <div>
+                    <label for="filtroTipo"><b>Filtrar por Tipo:</b></label>
+                    <input type="text" name="filtroTipo">
+                </div>
+            </div>
 
-        <label for="filtroNome">Filtrar por Nome:</label>
-        <input type="text" name="filtroNome">
+            <input type="submit" class="btn">
+        </form>
 
-        <label for="filtroTipo">Filtrar por Tipo:</label>
-        <input type="text" name="filtroTipo">
+        {{#if dados}}
+        <div id="dados">
+            <h2>Entradas</h2>
+            {{#each dados as | d |}}
+            {{#ifEquals d/tipo 'Entradas'}}
+            <p>{{d/nome}}</p>
+            {{/ifEquals}}
+            {{/each}}
 
-        <input type="submit">
-    </form>
+            <h2>Pratos</h2>
+            {{#each dados as | d |}}
+            {{#ifEquals d/tipo 'Pratos'}}
+            <p>{{d/nome}}</p>
+            {{/ifEquals}}
+            {{/each}}
 
-    {{#if dados}}
-    <div id="dados">
-        <h2>Entradas</h2>
-        {{#each dados as | d |}}
-        {{#ifEquals d/tipo 'Entradas'}}
-        <p>{{d/nome}}</p>
-        {{/ifEquals}}
-        {{/each}}
-
-        <h2>Pratos</h2>
-        {{#each dados as | d |}}
-        {{#ifEquals d/tipo 'Pratos'}}
-        <p>{{d/nome}}</p>
-        {{/ifEquals}}
-        {{/each}}
-
-        <h2>Sobremesas</h2>
-        {{#each dados as | d |}}
-        {{#ifEquals d/tipo 'Sobremessas'}}
-        <p>{{d/nome}}</p>
-        {{/ifEquals}}
-        {{/each}}
-    </div>
-    {{/if}}
+            <h2>Sobremesas</h2>
+            {{#each dados as | d |}}
+            {{#ifEquals d/tipo 'Sobremessas'}}
+            <p>{{d/nome}}</p>
+            {{/ifEquals}}
+            {{/each}}
+        </div>
+        {{/if}}
+    </section>
 
     <script src="https://www.gstatic.com/firebasejs/9.2.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.2.0/firebase-firestore.js"></script>
