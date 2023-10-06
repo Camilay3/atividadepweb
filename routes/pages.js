@@ -11,7 +11,9 @@ function tratar(str) {
 
     strs.forEach(s => {
         if (s != 'de') {
-            palavra.push(`${s.charAt(0).toUpperCase()}${s.slice(1).toLowerCase()}`)
+            palavra.push(`${s.charAt(0).toUpperCase()}${s.slice(1).toLowerCase()}`);
+        } else {
+            palavra.push(`de`);
         }
     })
 
@@ -87,14 +89,18 @@ router.post('/ind', async (req, res) => {
                 return
             }
 
-            if (quantidade && parseInt(quantidade) > 0) {
-                snapshot.forEach(doc => {
-                    dados.push(doc.data());
-                });
-                quantidade--;
-            };
+            if (quantidade) {
+                quantidade = parseInt(quantidade);
 
-            res.render('index', { dados });
+                snapshot.forEach(doc => {
+                    if (quantidade == 0) {
+                        return
+                    }
+                    dados.push(doc.data());
+                    quantidade--;
+                });
+                return res.render('index', { dados });
+            };
         })
         .catch(error => {
             console.error('Erro ao obter documentos: ', error);
