@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWeb</title>
+</head>
+
+<body>
+    <p><b>Escolha uma quantidade de registros para exibir: </b></p>
+    <div class="nums">
+        <a href="/ind/5">5</a>
+        <a href="/ind/10">10</a>
+        <a href="/ind/15">15</a>
+    </div>
+
+    <form action="/ind" method="POST">
+        <input type="radio" name="quantidade" id="qnt5" value="5">
+        <label for="qnt5">Mostrar 5 registros</label>
+
+        <input type="radio" name="quantidade" id="qnt10" value="10">
+        <label for="qnt10">Mostrar 10 registros</label>
+
+        <input type="radio" name="quantidade" id="qnt15" value="15">
+        <label for="qnt15">Mostrar 15 registros</label>
+
+        <label for="filtroNome">Filtrar por Nome:</label>
+        <input type="text" name="filtroNome">
+
+        <label for="filtroTipo">Filtrar por Tipo:</label>
+        <input type="text" name="filtroTipo">
+
+        <input type="submit">
+    </form>
+
+    {{#if dados}}
+    <div id="dados">
+        <h2>Entradas</h2>
+        {{#each dados as | d |}}
+        {{#ifEquals d/tipo 'Entradas'}}
+        <p>{{d/nome}}</p>
+        {{/ifEquals}}
+        {{/each}}
+
+        <h2>Pratos</h2>
+        {{#each dados as | d |}}
+        {{#ifEquals d/tipo 'Pratos'}}
+        <p>{{d/nome}}</p>
+        {{/ifEquals}}
+        {{/each}}
+
+        <h2>Sobremesas</h2>
+        {{#each dados as | d |}}
+        {{#ifEquals d/tipo 'Sobremessas'}}
+        <p>{{d/nome}}</p>
+        {{/ifEquals}}
+        {{/each}}
+    </div>
+    {{/if}}
+
+    <script src="https://www.gstatic.com/firebasejs/9.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.2.0/firebase-firestore.js"></script>
+</body>
